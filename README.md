@@ -7,9 +7,9 @@ you'll need to get building sites straight away.
 What do you need?
 =================
 Project Oscar requires:
-- VirtualBox 
+- VirtualBox  
   http://www.virtualbox.org/
-- Vagrant 
+- Vagrant  
   http://vagrantup.com/
 
 Getting started

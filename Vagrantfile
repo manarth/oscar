@@ -2,6 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant::Config.run do |config|
+
   # This box was originally based against lucid32.
   config.vm.box = "lucid32"
 
@@ -30,13 +31,13 @@ Vagrant::Config.run do |config|
 
   # The puppet config builds all the services such as Apache, MySQL, etc.
   # These paths are relative to this Vagrant file.
+
   puppetpath = File.expand_path(__FILE__ + '/../puppet');
 
   config.vm.provision :puppet do |puppet|
-    puppet.module_path    = puppetpath + "/modules",
-
-    puppet.manifests_path = puppetpath + "/manifests",
-    puppet.manifest_file  = puppetpath + "/manifests/base.pp"
+    puppet.module_path    = puppetpath + "/modules"
+    puppet.manifests_path = puppetpath + "/manifests"
+    puppet.manifest_file  = "base.pp"
   end
 
 end

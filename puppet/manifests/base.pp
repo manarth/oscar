@@ -38,6 +38,17 @@ package { 'php5-memcached': }
 package { 'php5-mysql': }
 package { 'php5-xsl': }
 
+package { 'php-pear': }
+
+
+
+
+
+class { 'drush': }
+# class { 'drush-feather': }
+
+
+
 
 # These packages would normally only be used in Dev.
 class {'avahi': }

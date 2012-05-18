@@ -21,7 +21,7 @@ Getting started
    does not yet exist.
 4. mkdir -p ~/Development/drupaldev
 5. cd ~/Development/drupaldev
-6. vagrant box add oscar http://github.com/manarth/oscar/project_oscar.box  
+6. vagrant box add oscar http://raw.github.com/manarth/oscar/master/packages/project_oscar.box  
    This assumes you want to work from the latest (dev) version of Project Oscar.  
    Change the URL if you prefer to use a particular release.
 7. vagrant init oscar

@@ -4,14 +4,25 @@
 # Base box.
 base="ProjectOscar_1337284846"
 
+# Path to the directory of this script.
+cwd="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 # Path to the .box file.
-# TODO: make this relative to this package.sh script.
-filepath="~/Development/ProjectOscar/packages"
+filepath="$cwd/packages"
 
 # Filename for the .box file
 filename="project_oscar.box"
 
 boxfile="$filepath/$filename"
 
+# Remove the old box, if it exists.
+if [ -f $boxfile ]
+  then
+    echo "Removing old boxfile."
+    rm $boxfile
+fi
+
+echo "Packaging $boxfile."
+
 # Package that box.
-vagrant package --base $base --output $boxfile --vagrantfile Vagrantfile --include README.md,puppet/
+vagrant package --base $base --output $boxfile --vagrantfile Vagrantfile --include puppet/

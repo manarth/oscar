@@ -6,7 +6,8 @@ Vagrant::Config.run do |config|
   # This box was originally based against lucid32.
   config.vm.box = "lucid32"
 
-  config.vm.share_folder("v-root", "/vagrant", ".")
+  # TODO: make this relative to the box instance, not the box master.
+  # config.vm.share_folder("v-root", "/vagrant", ".")
   
   # This box is created with the hostname "vagrant-drupaldev.local".
   config.vm.host_name = "vagrant-drupaldev"

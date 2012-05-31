@@ -21,6 +21,12 @@ package { 'curl': }
 #       Seriously, .module IS NOT a Pascal file.
 
 
+file { '/srv' :
+  ensure => 'directory',
+  owner => 'vagrant',
+}
+
+
 # Services used to run Drupal.
 package { 'apache2': }
 package { 'mysql-server': }
@@ -33,6 +39,7 @@ package { 'php5-cli': }
 package { 'php-apc': }
 package { 'php5-curl': }
 package { 'php5-gd': }
+package { 'php5-mcrypt': }
 package { 'php5-memcache': }
 package { 'php5-memcached': }
 package { 'php5-mysql': }

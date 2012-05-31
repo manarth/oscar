@@ -10,13 +10,12 @@ Vagrant::Config.run do |config|
   # config.vm.share_folder("v-root", "/vagrant", ".")
   
   # This box is created with the hostname "vagrant-drupaldev.local".
-  config.vm.host_name = "vagrant-drupaldev"
+  config.vm.host_name = "vm-drupaldev"
 
 
   # Optional network modes.
-  # - Host-only
-  # - NAT       Sets up a local private network to the host, but forwards
-  #             external HTTP requests as needed.
+  # - Host-only The VM can only be accessed from the host machine (or via
+  #             a forwarded port, if that's configured).
   # - Bridged   Relies on an external DHCP server. Typically doesn't suit
   #             corporate networks.
   config.vm.network :hostonly, "192.168.33.10"

@@ -3,12 +3,18 @@
 
 Vagrant::Config.run do |config|
 
+  # The package is typically stored in ~/.vagrant/boxes/xyz.
+  package_path = File.expand_path(__FILE__ + '/..')
+
+  # Get the path to this box instance.
+
+
   # This box was originally based against lucid32.
   config.vm.box = "lucid32"
 
   # TODO: make this relative to the box instance, not the box master.
   # config.vm.share_folder("v-root", "/vagrant", ".")
-  
+
   # This box is created with the hostname "vagrant-drupaldev.local".
   config.vm.host_name = "vm-drupaldev"
 
@@ -18,7 +24,7 @@ Vagrant::Config.run do |config|
   #             a forwarded port, if that's configured).
   # - Bridged   Relies on an external DHCP server. Typically doesn't suit
   #             corporate networks.
-  config.vm.network :hostonly, "192.168.33.10"
+  # config.vm.network :hostonly, "192.168.33.10"
   # config.vm.network :bridged
 
   # Port Forwarding
@@ -30,13 +36,12 @@ Vagrant::Config.run do |config|
   # config.vm.forward_port 80, 8080
 
   # The puppet config builds all the services such as Apache, MySQL, etc.
-  # These paths are relative to this Vagrant file.
-
-  puppetpath = File.expand_path(__FILE__ + '/../puppet');
+  # These paths are relative to the package.
+  puppet_path = package_path + '/puppet';
 
   config.vm.provision :puppet do |puppet|
-    puppet.module_path    = puppetpath + "/modules"
-    puppet.manifests_path = puppetpath + "/manifests"
+    puppet.module_path    = puppet_path + "/modules"
+    puppet.manifests_path = puppet_path + "/manifests"
     puppet.manifest_file  = "base.pp"
   end
 

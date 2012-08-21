@@ -12,19 +12,32 @@ Project Oscar requires:
 - Vagrant  
   http://vagrantup.com/
 
+
+What does Project Oscar provide?
+================================
+1. A Drupal VM  
+   Provides a web server, database, Drush, PHPMyAdmin, and local tools.
+2. A services VM (in progress, coming soon!)  
+   Provides Solr and Graylog2.
+
+
 Getting started
 ===============
-1. Preparation:
+1. Preparation (you only need to do this once):
     - Install VirtualBox.
     - Install Vagrant.
+    - Download Oscar.  
+      `wget https://raw.github.com/manarth/oscar/master/packages/project_oscar.box`  
+      This assumes you want to work from the latest (dev) version of Project Oscar.  
+      Change the URL if you prefer to use a particular release (actually, we've only  
+      got dev at the moment).
+    - Add the box to your Vagrant environment.  
+      `vagrant box add oscar project_oscar.box`  
+2. Project preparation:
     - Choose a directory to work in.  
       We'll use ~/Development/drupaldev in this example, and assume this directory  
       does not yet exist.
     - `mkdir -p ~/Development/drupaldev`
     - `cd ~/Development/drupaldev`
-2. `vagrant box add oscar https://raw.github.com/manarth/oscar/master/packages/project_oscar.box`  
-
-   This assumes you want to work from the latest (dev) version of Project Oscar.  
-   Change the URL if you prefer to use a particular release.
 3. `vagrant init oscar`
 4. `vagrant up`

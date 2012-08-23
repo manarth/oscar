@@ -26,13 +26,12 @@ Getting started
 1. Preparation (you only need to do this once):
     - Install VirtualBox.
     - Install Vagrant.
-    - Download Oscar.  
-      `wget https://raw.github.com/manarth/oscar/master/packages/project_oscar.box`  
+    - Download Oscar's base box.  
+      `vagrant box add oscar https://github.com/downloads/manarth/oscar/project_oscar.box`  
+
       This assumes you want to work from the latest (dev) version of Project Oscar.  
       Change the URL if you prefer to use a particular release (actually, we've only  
       got dev at the moment).
-    - Add the box to your Vagrant environment.  
-      `vagrant box add oscar project_oscar.box`  
 2. Project preparation:
     - Choose a directory to work in.  
       We'll use ~/Development/drupaldev in this example, and assume this directory  

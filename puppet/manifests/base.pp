@@ -65,7 +65,10 @@ package { 'php5-xsl': }
 
 package { 'php-pear': }
 
-
+phpundeprecate {'/etc/php5/conf.d/mcrypt.ini':
+  file => '/etc/php5/conf.d/mcrypt.ini',
+  require => Package['php5-mcrypt'],
+}
 
 class { 'drush': }
 # class { 'drush-feather': }

@@ -2,6 +2,9 @@
 # vi: set ft=puppet :
 
 
+# TODO: add timezone configuration (and make it easily extensible from sub-boxes).
+
+
 group { "puppet": 
   ensure => present,
 }
@@ -24,7 +27,22 @@ package { 'curl': }
 file { '/srv' :
   ensure => 'directory',
   owner => 'vagrant',
+  group => 'vagrant',
 }
+
+
+# Ensure the "vagrant" user has full MySQL access.
+exec { 'mysql':
+  command => "/usr/bin/mysql -e 'GRANT ALL ON *.* to \"vagrant\"@\"localhost\" WITH GRANT OPTION;'",
+  require => Package['mysql-server'],
+}
+
+# Ensure that mod-rewrite is running.
+exec { 'a2enmod':
+  command => '/usr/sbin/a2enmod rewrite',
+  require => Package['apache2'],
+}
+
 
 
 # Services used to run Drupal.
@@ -49,11 +67,8 @@ package { 'php-pear': }
 
 
 
-
-
 class { 'drush': }
 # class { 'drush-feather': }
-
 
 
 

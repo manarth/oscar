@@ -70,6 +70,8 @@ package { 'php-pear': }
 class { 'drush': }
 # class { 'drush-feather': }
 
+class { 'phpmyadmin': }
+
 
 
 # These packages would normally only be used in Dev.

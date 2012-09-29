@@ -86,6 +86,7 @@ node drupal_template {
   package { 'subversion': }
   package { 'php5-dev': }
   package { 'php5-xdebug': }
+  package { 'unzip': }
 
   class { 'git_check_config': }
 

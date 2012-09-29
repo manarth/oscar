@@ -1,0 +1,82 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+
+###
+# This is the Vagrantfile packaged with Oscar.
+###
+Vagrant::Config.run do |config|
+
+  # When oscar is packaged and installed, it'll usually be stored in:
+  #   ~/.vagrant.d/boxes/oscar
+  # This packaged Vagrantfile is deployed to:
+  #   ~/.vagrant.d/boxes/oscar/include/_Vagrantfile
+  #
+  # box_path is the path to the directory of the packaged contents, i.e.:
+  #   ~/.vagrant.d/boxes/oscar/include
+  box_path = File.expand_path(__FILE__ + '/..')
+
+
+  # The puppet config builds all the services such as Apache, MySQL, etc.
+  # puppet_path is the fully-qualified path to the puppet directories, i.e.:
+  #  ~/.vagrant.d/boxes/oscar/include/puppet
+  puppet_path = box_path + '/puppet';
+
+
+  # All three boxes packaged with oscar share the same provisioning.
+  config.vm.provision :puppet do |puppet|
+    puppet.manifests_path = puppet_path + "/manifests"
+    puppet.manifest_file  = "base.pp"
+    puppet.module_path    = [ puppet_path + "/modules" ]
+  end
+
+
+  # When we're packaging (or running Oscar as a plain-old-instance), then the
+  # base box is 'lucid32'.  Regular instances will use a base box of 'oscar'.
+  config.vm.box = "lucid32"
+
+
+
+  ###
+  # This section needs to be implemented by each oscar implementation.
+  ###
+
+
+  # Get the path to this box instance.
+  # TODO: Validate this lookup is correct.
+  instance_path = File.expand_path("")
+
+
+  # The directory name is used to build the host-names.
+  # E.g. the directory "foobar" will produce the boxes:
+  # * vm-foobar-drupaldev
+  # * vm-foobar-drupalsvcs
+  # * vm-foobar-drupaltest
+  directory = File.basename(instance_path)
+
+  # Hostname labels are 1-63 characters.
+  # NETBIOS (Samba) limits the name length to 15 characters
+
+  # Define the primary Drupal box.
+  # config.vm.define :drupal do |drupal_config|
+  #   drupal_config.vm.box = "oscar"
+  #   drupal_config.vm.host_name = "vm-" + directory + "-drupaldev"
+  #   drupal_config.vm.host_name = "vm-" + directory + "-dev"
+  #   drupal_config.vm.network :hostonly, "192.168.1.10"
+  # end
+
+  # # Define the Services box.
+  # config.vm.define :services do |services_config|
+  #   services_config.vm.box = build_box
+  #   services_config.vm.host_name = "vm-" + directory + "-svcs"
+  #   services_config.vm.network :hostonly, "192.168.1.11"
+  # end
+
+  # Define the Test box.
+  # config.vm.define :test do |test_config|
+  #   test_config.vm.box = build_box
+  #   test_config.vm.host_name = "vm-" + directory + "-drupaltest"
+  #   test_config.vm.network :hostonly, "192.168.1.12"
+  # end
+
+end

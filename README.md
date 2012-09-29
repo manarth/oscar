@@ -43,9 +43,15 @@ Getting started
     - `mkdir -p ~/Development/drupaldev`
     - `cd ~/Development/drupaldev`
 
-3. `vagrant init oscar`  
-   _This creates a file in the working directory called `Vagrantfile`, which  
-   contains the instructions for Vagrant to build the oscar environment._
+3. `wget https://raw.github.com/manarth/oscar/master/Vagrantfile`  
+   _or_  
+   `curl https://raw.github.com/manarth/oscar/master/Vagrantfile > Vagrantfile`  
+   
+   _This is a replacement for `vagrant init oscar`._  
+   This creates a file in the working directory called `Vagrantfile`, which  
+   contains the instructions for Vagrant to build the oscar environment.  
+   The `wget` command is used instead of `vagrant init`, because the default  
+   Vagrantfile only contains a single box instance, whilst Oscar uses 3.
 
 4. `vagrant up`  
    _This starts the build process: creating the VMs defined by oscar, and  

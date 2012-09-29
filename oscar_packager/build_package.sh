@@ -4,7 +4,7 @@
 # Base box.
 # This is the VBox identity (found through `VBoxManage list runningvms`).
 # Take the first running instance.
-base=`VBoxManage list runningvms | grep --color=never -E 'ProjectOscar_[0-9]+' | sed -E 's/"(ProjectOscar_[0-9]+)".*/\1/' | head -n1`
+base=`VBoxManage list runningvms | grep --color=never -E 'oscar_packager_[0-9]+' | sed -E 's/"(oscar_packager_[0-9]+)".*/\1/' | head -n1`
 
 # Validate that a base box has been found.
 if [ -z "$base" ]
@@ -36,7 +36,8 @@ if [ -f $boxfile ]
 fi
 
 echo "Packaging $boxfile."
+echo
 
 # Package that box.
-echo vagrant package --base $base --output $boxfile --vagrantfile Vagrantfile --include puppet/
+vagrant package --base $base --output $boxfile --vagrantfile Vagrantfile --include puppet/
 

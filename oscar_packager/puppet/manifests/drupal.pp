@@ -87,5 +87,6 @@ node drupal_template {
   package { 'php5-dev': }
   package { 'php5-xdebug': }
 
+  class { 'git_check_config': }
 
 }

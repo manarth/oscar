@@ -1,48 +1,53 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+
+###
+# This is the Vagrantfile used by Oscar instances.
+###
 Vagrant::Config.run do |config|
 
-  # The package is typically stored in ~/.vagrant/boxes/xyz.
-  package_path = File.expand_path(__FILE__ + '/..')
+
+  build_box = "oscar"
+
 
   # Get the path to this box instance.
+  # TODO: Validate this lookup is correct.
+  instance_path = File.expand_path("")
 
 
-  # This box was originally based against lucid32.
-  config.vm.box = "lucid32"
-
-  # TODO: make this relative to the box instance, not the box master.
-  # config.vm.share_folder("v-root", "/vagrant", ".")
-
-  # This box is created with the hostname "vagrant-drupaldev.local".
-  config.vm.host_name = "vm-drupaldev"
+  # The directory name is used to build the host-names.
+  # E.g. the directory "foobar" will produce the boxes:
+  # * vm-foobar-drupaldev
+  # * vm-foobar-drupalsvcs
+  # * vm-foobar-drupaltest
+  directory = File.basename(instance_path)
 
 
-  # Optional network modes.
-  # - Host-only The VM can only be accessed from the host machine (or via
-  #             a forwarded port, if that's configured).
-  # - Bridged   Relies on an external DHCP server. Typically doesn't suit
-  #             corporate networks.
-  # config.vm.network :hostonly, "192.168.33.10"
-  # config.vm.network :bridged
+  # Hostname labels are 1-63 characters.
+  # NETBIOS (Samba) limits the name length to 15 characters
 
-  # Port Forwarding
-  # Port Forwarding isn't used because the VM exposes its IP via Avahi,
-  # and most development won't need external access.
-  # Add port-forwarding entries here if you need them.
-  # Forward a port from the guest to the host, which allows for outside
-  # computers to access the VM, whereas host only networking does not.
-  # config.vm.forward_port 80, 8080
+  # Define the primary Drupal box.
+  # This is the primary VM box, which means that it'll be the one acted-upon,
+  # unless a box-name parameter is passed.
+  config.vm.define :drupal, :primary => true do |drupal_config|
+    drupal_config.vm.box = build_box
+    drupal_config.vm.host_name = "vm-" + directory + "-drupaldev"
+    drupal_config.vm.network :hostonly, "192.168.1.10"
+  end
 
-  # The puppet config builds all the services such as Apache, MySQL, etc.
-  # These paths are relative to the package.
-  puppet_path = package_path + '/puppet';
+  # Define the Services box.
+  config.vm.define :services do |services_config|
+    services_config.vm.box = build_box
+    services_config.vm.host_name = "vm-" + directory + "-drupalsvcs"
+    services_config.vm.network :hostonly, "192.168.1.11"
+  end
 
-  config.vm.provision :puppet do |puppet|
-    puppet.module_path    = puppet_path + "/modules"
-    puppet.manifests_path = puppet_path + "/manifests"
-    puppet.manifest_file  = "base.pp"
+  # Define the Test box.
+  config.vm.define :test do |test_config|
+    test_config.vm.box = build_box
+    test_config.vm.host_name = "vm-" + directory + "-drupaltest"
+    test_config.vm.network :hostonly, "192.168.1.12"
   end
 
 end
